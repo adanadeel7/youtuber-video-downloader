@@ -130,7 +130,7 @@ async function Login(req:any,res:any) {
 
         //Success Response 
         res.status(200).json({
-            message : "User Successfully Logined in", 
+            message : "User Successfully Logged in", 
             token, 
             user : { 
                 _id : users._id, 
