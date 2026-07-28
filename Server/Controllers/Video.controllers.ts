@@ -1,8 +1,13 @@
 import ytdl from "youtube-dl-exec";
-import { Video } from "../models/video.model";
+import { Video } from "../models/video.model.ts";
 import path from "node:path";
 import ffmpeg from "fluent-ffmpeg";
-import fs from "fs"
+import fs from "fs";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const getVideoInfo = async (req: any, res: any) => {
   try {
     // Getting URL From Body
@@ -79,7 +84,11 @@ const downloadVideo = async (req: any, res: any) => {
 
     const title = info.title.replace(/[^\w\s\-_]/gi, "");
     const fileName = `${title}_${Date.now()}.${format || "mp4"}`;
-    const filePath = path.join(__dirname, "../downloads", fileName);
+    const downloadsDir = path.join(__dirname, "../downloads");
+    if (!fs.existsSync(downloadsDir)) {
+      fs.mkdirSync(downloadsDir, { recursive: true });
+    }
+    const filePath = path.join(downloadsDir, fileName);
 
     if (format === "mp3") {
       console.log("Downloading and converting to MP3...");

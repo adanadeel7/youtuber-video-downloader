@@ -1,12 +1,9 @@
 import express from "express";
-import { getVideoInfo,downloadVideo } from "../Controllers/Video.controllers.ts";
+import { getVideoInfo, downloadVideo } from "../Controllers/Video.controllers.ts";
 
+const router = express.Router();
 
-const router = express.Router()
+router.post("/info", getVideoInfo);
+router.post("/download", downloadVideo);
 
-router.post("/getvideoinfo", getVideoInfo)
-router.post("/downloadvideo", downloadVideo)
-
-
-
-export default router; 
+export default router;
